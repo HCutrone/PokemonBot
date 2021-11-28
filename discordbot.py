@@ -44,8 +44,13 @@ async def toprated(context):
 
 @bot.command()
 async def pkmn(context, pokemon):
-  await context.send("Command that will take a pokemon name/id and returns pokedex entry, type(s), and evolutions.\
-                      \n Use !help to see other commands to see more information")
+  #await context.send("Command that will take a pokemon name/id and returns pokedex entry, type(s), and evolutions.\
+  #                    \n Use !help to see other commands to see more information")
+  msg = ""
+  msg += helper.getEntry(pokemon, "black") + "\n"
+  msg += helper.getTypes(pokemon) + "\n"
+  msg += helper.getEvolution(pokemon)
+  await context.send(msg)
 
 @bot.command()
 async def abilities(context, pokemon):
@@ -58,6 +63,16 @@ async def abilities(context, pokemon):
   await context.send(helper.getAbilities(pokemon))
 
 @bot.command()
+async def entry(context, pokemon, ver):
+  ''' Command to output the pokedex entry of a provided Pokemon
+      - if a pokemon is not provided, do a random one
+      - if only the pokemon is listed, do a random version
+      - if a version is listed, use that version's entry '''
+
+  await context.send(helper.getEntry(pokemon, ver))
+
+
+@bot.command()
 async def type(context, pokemon):
   # input:
   #   pokemon name or id
@@ -67,15 +82,15 @@ async def type(context, pokemon):
 
   #await context.send("Takes a Pokemon's names or id and returns the Pokemon's types and strengths and weaknesses."
   msg = ""
-  msg += helper.getTypes(pokemon) + "\n"
-  msg += "Strengths:\n"
-  msg += helper.getStrengths(pokemon)
-  msg += "Weaknesses:\n"
-  msg += helper.getWeaknesses(pokemon)
+  msg += helper.getTypes(pokemon)
+  # msg += "Strengths:\t"
+  # msg += helper.getStrengths(pokemon)
+  # msg += "Weaknesses:\t"
+  # msg += helper.getWeaknesses(pokemon)
   await context.send(msg)
 
 @bot.command()
-async def evol(context, *args):
-  await context.send("Evolutions command")
+async def evol(context, pokemon):
+  await context.send(helper.getEvolution(pokemon))
   
 bot.run(token)
