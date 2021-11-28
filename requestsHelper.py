@@ -63,43 +63,59 @@ def getTypes(pokemon):
   json_data = pkmnJSON(pokemon)
   msg = ""
 
+  pkmnName = json_data["name"].title()
+  
   types = [1] * 18
+  pkmnTypes = []
 
   for type in json_data["types"]:
     # add the pokemon's type to the message
-    currentType = type["type"]["name"].title()
-    msg += f"{currentType} \n"
+    pkmnTypes.append(type["type"]["name"].title())
     # get the current type's strenghts and weaknesses
     typeDefense(type["type"]["url"], types)
+  typesStr = " and ".join(pkmnTypes)
+  msg += f"{pkmnName} is {typesStr} type\n"
   
-  resistant = "Resistant to: "
-  weak = "Weak to: "
-  immune = "Immune to: "
+  resistant = []
+  weak = []
+  immune = []
   index = 0
   # interpret the types data after all types have been accounted for
   for num in types:
-    type = list(TYPEIDX.keys())[list(TYPEIDX.values()).index(index)]
+    type = list(TYPEIDX.keys())[list(TYPEIDX.values()).index(index)].title()
     if num > 1:
       # weak to
       # 2 = 2x
       # 3 = 4x
       # (num - 1) * 2
       power = str((num - 1) * 2)
-      weak += f"{type}({power}x), "
+      weak.append(f"{type}({power}x)")
     elif num < 0:
       # resistant to
       # -1 = .5x
       # -2 = .25x
       # num * (-1/2)
       power = str((-1/2) / float(num))
-      resistant += f"{type}({power}x), "
-    elif num != 1:
+      resistant.append(f"{type}({power}x)")
+    elif num == 0:
       # immune to
-      # num == 0
-      immune += f"{type}, "
+      immune.append(f"{type}")
     index += 1
 
-  msg += f"\n{weak}\n{resistant}\n{immune}"
+  if len(weak) == 0:
+    weakstr = "None"
+  else:
+    weakstr = ", ".join(weak)
+  if len(resistant) == 0:
+    resistantstr = "None"
+  else:
+    resistantstr = ", ".join(resistant)
+  if len(immune) == 0:
+    immunestr = "None"
+  else:
+    immunestr = ", ".join(immune)
+
+  msg += f"Weak to:\t{weakstr}\nResistant to:\t{resistantstr}\nImmune to:\t{immunestr}"
   return msg
 
 def typeOffense(url, types):

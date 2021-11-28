@@ -79,14 +79,9 @@ async def type(context, pokemon):
   # output:
   #   the pokemon's type(s) and strengths and weaknesses
 
-
-  #await context.send("Takes a Pokemon's names or id and returns the Pokemon's types and strengths and weaknesses."
+  # "Takes a Pokemon's names or id and returns the Pokemon's types and strengths and weaknesses."
   msg = ""
   msg += helper.getTypes(pokemon)
-  # msg += "Strengths:\t"
-  # msg += helper.getStrengths(pokemon)
-  # msg += "Weaknesses:\t"
-  # msg += helper.getWeaknesses(pokemon)
   await context.send(msg)
 
 @bot.command()
