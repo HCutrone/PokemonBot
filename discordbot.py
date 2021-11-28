@@ -3,8 +3,10 @@ from discord.ext import commands
 import requests
 import json
 import requestsHelper as helper
+import TOKEN
 
 bot = commands.Bot(command_prefix = '!')
+token = TOKEN.TOKEN
 
 @bot.event
 async def on_ready():
@@ -76,4 +78,4 @@ async def type(context, pokemon):
 async def evol(context, *args):
   await context.send("Evolutions command")
   
-bot.run("OTA5NTU0MjkzODAyMTM5Njc4.YZF-cg.h4h7ZL-KxvMG6XdJehkUltlbvBE")
+bot.run(token)
