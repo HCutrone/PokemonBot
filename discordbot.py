@@ -3,10 +3,10 @@ from discord.ext import commands
 import requests
 import json
 import requestsHelper as helper
-import TOKEN
+import os
+token = os.environ["TOKEN"]
 
 bot = commands.Bot(command_prefix = '!')
-token = TOKEN.TOKEN
 
 @bot.event
 async def on_ready():
