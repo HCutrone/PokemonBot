@@ -4,7 +4,10 @@ import requests
 import json
 import requestsHelper as helper
 import os
+
 token = os.environ["TOKEN"]
+HELP = "Thanks for using Pokebot! This bot uses the PokeAPI to provide information on all your favorite Pokemon. To see a list of commands, use !commands."
+COMMANDS = "Commands"
 
 bot = commands.Bot(command_prefix = '!')
 
@@ -26,6 +29,14 @@ async def on_message(message):
 @bot.command()
 async def test(context, arg):
   await context.send(arg)
+
+@bot.command()
+async def help(context, arg):
+  await context.send(HELP)
+
+@bot.command()
+async def commands(context, arg):
+  await context.send(COMMANDS)
 
 @bot.command() 
 async def inspire(context):
